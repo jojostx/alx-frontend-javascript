@@ -1,10 +1,10 @@
 import { createUser, uploadPhoto } from './utils';
 
 export default async function asyncUploadUser() {
-  const uploadPromise = uploadPhoto('photo-profile-1');
-  const userPromise = createUser('Guillaume', 'Salva');
+  const uploadPromise = uploadPhoto();
+  const userPromise = createUser(false);
 
-  return Promise.allSettled([uploadPromise, userPromise])
-    .then((results) => ({ photo: results[0].value, user: results[1].value }))
+  return Promise.all([uploadPromise, userPromise])
+    .then((results) => ({ photo: results[0], user: results[1] }))
     .catch(() => ({ photo: null, user: null }));
 }
